@@ -43,9 +43,12 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         ivProfileImage.setImageResource(0);
 
         TextView ivUserName = (TextView) convertView.findViewById(R.id.tvUserName);
+        TextView ivScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
         TextView ivBody = (TextView) convertView.findViewById(R.id.tvBody);
 
         ivUserName.setText(tweet.getUser().getName());
+        //add @ to as prefix to screen name
+        ivScreenName.setText("@"+tweet.getUser().getScreenName());
         ivBody.setText(tweet.getBody());
 
         String profileImageUrl = tweet.getUser().getProfileImageUrl();

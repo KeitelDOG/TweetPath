@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.megalobiz.tweetpath.R;
 import com.megalobiz.tweetpath.models.Tweet;
+import com.megalobiz.tweetpath.utils.ParseRelativeDate;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -44,11 +45,19 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
         TextView ivUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView ivScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
+        TextView ivTimeAgo = (TextView) convertView.findViewById(R.id.tvTimeAgo);
         TextView ivBody = (TextView) convertView.findViewById(R.id.tvBody);
 
         ivUserName.setText(tweet.getUser().getName());
         //add @ to as prefix to screen name
-        ivScreenName.setText("@"+tweet.getUser().getScreenName());
+        ivScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
+
+        // set relative time ago, ex: 6 seconds ago , 3 minutes ago, 8 hours ago
+        String timeAgo = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
+        // set abbreviated time ago, ex: 6s, 3m, 8h
+        String abbreviatedTimeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(timeAgo);
+        ivTimeAgo.setText(abbreviatedTimeAgo);
+
         ivBody.setText(tweet.getBody());
 
         String profileImageUrl = tweet.getUser().getProfileImageUrl();

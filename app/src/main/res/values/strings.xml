@@ -9,5 +9,6 @@
     <string name="body_tweet">Body Tweet</string>
     <string name="screen_name">\@ScreenName</string>
     <string name="tweet_user_image">Image of the User who tweet</string>
+    <string name="time_ago">ago</string>
 
 </resources>

@@ -71,7 +71,7 @@ public class TimelineActivity extends AppCompatActivity {
 
             // On FAILURE
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
             }
         });

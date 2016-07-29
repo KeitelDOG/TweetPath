@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by KeitelRobespierre on 7/27/2016.
- * parse the JSON + Store the data, encapsulate state loginc or display logic
+ * parse the JSON + Store the data, encapsulate state login or display logic
  */
 public class Tweet {
 

@@ -52,11 +52,9 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         //add @ to as prefix to screen name
         ivScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
 
-        // set relative time ago, ex: 6 seconds ago , 3 minutes ago, 8 hours ago
-        String timeAgo = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
         // set abbreviated time ago, ex: 6s, 3m, 8h
-        String abbreviatedTimeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(timeAgo);
-        ivTimeAgo.setText(abbreviatedTimeAgo);
+        String timeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(tweet.getCreatedAt());
+        ivTimeAgo.setText(timeAgo);
 
         ivBody.setText(tweet.getBody());
 

@@ -49,13 +49,19 @@ public class TwitterClient extends OAuthBaseClient {
 	// GET statuses/home_timeline.json
 	//    count = 25
 	//    since_id = 1
-	public void getHomeTimeline(AsyncHttpResponseHandler handler) {
+	public void getHomeTimeline(long oldestId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
 
         // specify the params
         RequestParams params = new RequestParams();
         params.put("count", 25);
-        params.put("since_id", 1);
+
+		if(oldestId == 0) {
+            params.put("since_id", 1);
+        } else {
+            // pocpulate fetch tweets whose Id are lower than tweet with the oldest Id
+            params.put("max_id", oldestId);
+        }
         // Execute the request
         getClient().get(apiUrl, params, handler);
 

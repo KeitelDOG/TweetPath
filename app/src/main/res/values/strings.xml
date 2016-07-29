@@ -7,7 +7,7 @@
     <string name="login_label">Connect with Twitter</string>
     <string name="username">UserName</string>
     <string name="body_tweet">Body Tweet</string>
-    <string name="screen_name">\@ScreenName</string>
+    <string name="screen_name">ScreenName</string>
     <string name="tweet_user_image">Image of the User who tweet</string>
     <string name="time_ago">ago</string>
 

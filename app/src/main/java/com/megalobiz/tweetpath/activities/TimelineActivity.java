@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.megalobiz.tweetpath.R;
@@ -18,12 +19,15 @@ import com.megalobiz.tweetpath.TwitterApplication;
 import com.megalobiz.tweetpath.TwitterClient;
 import com.megalobiz.tweetpath.adapters.TweetArrayAdapter;
 import com.megalobiz.tweetpath.models.Tweet;
+import com.megalobiz.tweetpath.utils.EndlessScrollListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.scribe.builder.api.TwitterApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -41,6 +45,17 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // setup view
+        setupViews();
+
+        client = TwitterApplication.getRestClient();
+        populateTimeline(Long.parseLong("0"));
+
+    }
+
+    //setup the view object value and listener
+    public void setupViews() {
         // find list view
         lvTweets = (ListView) findViewById(R.id.lvTweets);
         // create the array list (data source)
@@ -50,14 +65,27 @@ public class TimelineActivity extends AppCompatActivity {
         // connect adapter to list view
         lvTweets.setAdapter(aTweets);
 
-        client = TwitterApplication.getRestClient();
-        populateTimeline();
+        // add endless scroll listener
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                // find the oldest tweet id
+                long oldestId = getOldestTweetId();
+                //Toast.makeText(TimelineActivity.this,
+                //        "Load More -> Page: " + page + " - Oldest Id: " + oldestId,
+                //        Toast.LENGTH_LONG).show();
+
+                // pocpulate timeline with tweets before the tweet with the oldest Id
+                populateTimeline(oldestId);
+                return true;
+            }
+        });
     }
 
     // send an API request to get the timeline json
     // fill the listview by creating the tweet objects from the json
-    public void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+    public void populateTimeline(Long oldestId) {
+        client.getHomeTimeline(oldestId, new JsonHttpResponseHandler() {
             // On SUCCESS
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -72,7 +100,11 @@ public class TimelineActivity extends AppCompatActivity {
             // On FAILURE
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
+                //Log.d("DEBUG", errorResponse.toString());
+                if (throwable.getMessage().contains("resolve host")) {
+                    Toast.makeText(TimelineActivity.this,
+                            "Could not connect to internet, please verify your connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -100,4 +132,22 @@ public class TimelineActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // get oldest tweet id in the ArrayList tweets to search for other tweets before
+    // this last one
+    public Long getOldestTweetId() {
+        // if we want to sort the tweets first
+        /*Collections.sort(tweets, new Comparator<Tweet>(){
+            public int compare(Tweet t1, Tweet t2) {
+                if(t1.getUid() > t2.getUid())
+                    return 1;
+                else if(t1.getUid() < t2.getUid())
+                    return -1;
+                else
+                    return 0;
+            }
+        });*/
+
+        // tweets are already sort by Id in the ArrayList, so the last tweets in the
+        return tweets.get(tweets.size()-1).getUid();
+    }
 }

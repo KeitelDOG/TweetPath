@@ -63,7 +63,7 @@
         <TextView
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="58m"
+            android:text="@string/time_ago"
             android:id="@+id/tvTimeAgo"
             android:textColor="#AAA"
             android:layout_alignParentTop="true"

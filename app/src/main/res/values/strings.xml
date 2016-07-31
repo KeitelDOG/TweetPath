@@ -10,5 +10,9 @@
     <string name="screen_name">ScreenName</string>
     <string name="tweet_user_image">Image of the User who tweet</string>
     <string name="time_ago">ago</string>
+    <string name="compose_tweet">Compose</string>
+    <string name="tweet_hint">What\'s happening?</string>
+    <string name="tweet">TWEET</string>
+    <string name="compose_tweet_title">Compose Tweet</string>
 
 </resources>

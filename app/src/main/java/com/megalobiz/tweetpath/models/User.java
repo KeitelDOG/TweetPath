@@ -3,10 +3,12 @@ package com.megalobiz.tweetpath.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by KeitelRobespierre on 7/27/2016.
  */
-public class User {
+public class User implements Serializable {
 
     private String name;
     private long id;

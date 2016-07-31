@@ -5,13 +5,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by KeitelRobespierre on 7/27/2016.
  * parse the JSON + Store the data, encapsulate state login or display logic
  */
-public class Tweet {
+public class Tweet implements Serializable {
 
     private String body;
     private long uid;

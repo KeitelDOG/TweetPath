@@ -25,8 +25,8 @@ import com.loopj.android.http.RequestParams;
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "4UnlHrSQz8XRFfCxM3jYKLw5F";       // Change this
-	public static final String REST_CONSUMER_SECRET = "TEmhWEXNSOji0VTX8SWdWVlhHLzKMA1UOGdAsCNRBEJJAy1jT7"; // Change this
+	public static final String REST_CONSUMER_KEY = "0tqephMqSPgnbStIfVSOOltQv";       // Change this
+	public static final String REST_CONSUMER_SECRET = "5H99lJH07ReKhC90Eev37laJyL0EAlpWKv9gcyuPnsamaX1ZVk"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://cptweetpath"; // Change this (here and in manifest)
 
 	public TwitterClient(Context context) {
@@ -66,6 +66,29 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
 
     }
+
+    // VerifyCredentials - get information of the authenticated user
+    // GET account/verify_credentials.json
+    public void getVerifyCredentials(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+
+        // Execute the request
+        getClient().get(apiUrl, handler);
+    }
+
+	// HomeTimeline - get us to the Home Timeline
+	// POST statuses/update.json
+	//    status = variable
+	public void postUpdateStatus(String status, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+
+		// specify the params
+		RequestParams params = new RequestParams();
+		params.put("status", status);
+
+		// Execute the request
+		getClient().post(apiUrl, params, handler);
+	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

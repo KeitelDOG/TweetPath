@@ -1,8 +1,10 @@
 package com.megalobiz.tweetpath.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import com.megalobiz.tweetpath.TwitterApplication;
 import com.megalobiz.tweetpath.TwitterClient;
 import com.megalobiz.tweetpath.adapters.TweetArrayAdapter;
 import com.megalobiz.tweetpath.models.Tweet;
+import com.megalobiz.tweetpath.models.User;
 import com.megalobiz.tweetpath.utils.EndlessScrollListener;
 
 import org.json.JSONArray;
@@ -38,6 +41,8 @@ public class TimelineActivity extends AppCompatActivity {
     private TweetArrayAdapter aTweets;
     private ListView lvTweets;
 
+    //auth user
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +51,17 @@ public class TimelineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayShowHomeEnabled(true);
+        ab.setDisplayUseLogoEnabled(true);
+        ab.setLogo(R.drawable.ic_twitter_logo);
+        ab.setTitle("");
+
         // setup view
         setupViews();
 
         client = TwitterApplication.getRestClient();
+        fetchUserCredentials();
         populateTimeline(Long.parseLong("0"));
 
     }
@@ -82,15 +94,34 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
+    // fetch information of the authenticated user
+    public void fetchUserCredentials() {
+        client.getVerifyCredentials(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                user = User.fromJSON(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
     // send an API request to get the timeline json
     // fill the listview by creating the tweet objects from the json
-    public void populateTimeline(Long oldestId) {
+    public void populateTimeline(final Long oldestId) {
         client.getHomeTimeline(oldestId, new JsonHttpResponseHandler() {
             // On SUCCESS
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //Log.d("DEBUG", response.toString());
                 tweets = Tweet.fromJSONArray(response);
+                // clear list if populating for the first time, or on refresh
+                if(oldestId == 0) {
+                    aTweets.clear();
+                }
                 aTweets.addAll(tweets);
                 aTweets.notifyDataSetChanged();
                 //Log.d("DEBUG", tweets.toString());
@@ -100,7 +131,7 @@ public class TimelineActivity extends AppCompatActivity {
             // On FAILURE
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                //Log.d("DEBUG", errorResponse.toString());
+                Log.d("DEBUG", errorResponse.toString());
                 if (throwable.getMessage().contains("resolve host")) {
                     Toast.makeText(TimelineActivity.this,
                             "Could not connect to internet, please verify your connection", Toast.LENGTH_LONG).show();
@@ -129,6 +160,12 @@ public class TimelineActivity extends AppCompatActivity {
             return true;
         }
 
+        // action compose new tweet
+        if (id == R.id.action_compose) {
+            composeTweet();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -149,5 +186,29 @@ public class TimelineActivity extends AppCompatActivity {
 
         // tweets are already sort by Id in the ArrayList, so the last tweets in the
         return tweets.get(tweets.size()-1).getUid();
+    }
+
+    public void composeTweet() {
+        Intent i = new Intent(this, ComposeActivity.class);
+        i.putExtra("user", user);
+        startActivityForResult(i, 10);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 10) {
+            if (resultCode == RESULT_OK) {
+                // retrieve the composed tweet
+                //Tweet tweet = (Tweet) data.getSerializableExtra("tweet");
+
+                // add it on top of tweets array list, before the tweet at index 0
+                //tweets.add(0, tweet);
+                //aTweets.notifyDataSetChanged();
+
+                // repopulate the timeline
+                populateTimeline(Long.parseLong("0"));
+            }
+        }
     }
 }

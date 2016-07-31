@@ -43,7 +43,9 @@
         <activity
             android:name=".activities.TimelineActivity"
             android:label="@string/title_activity_timeline"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.ComposeActivity"
+            android:label="@string/compose_tweet_title" />
     </application>
 
 </manifest>

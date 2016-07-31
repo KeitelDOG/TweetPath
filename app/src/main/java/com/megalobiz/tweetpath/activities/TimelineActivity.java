@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListViewCompat;
@@ -35,6 +36,8 @@ import java.util.Comparator;
 import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
+
+    SwipeRefreshLayout swipeContainer;
 
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
@@ -92,6 +95,21 @@ public class TimelineActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // Lookup the Swipe Container view
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
+        //Listen for Swipe Refresh to fetch Moives again
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Make sure to call swipeContainer.setRefreshing(fasle) once the
+                // network has completed successfully
+                //clear list before refreshing
+                aTweets.clear();
+                populateTimeline(Long.parseLong("0"));
+            }
+        });
     }
 
     // fetch information of the authenticated user
@@ -129,6 +147,9 @@ public class TimelineActivity extends AppCompatActivity {
                 // scroll to first element in list view
                 if (oldestId == 0)
                     lvTweets.setSelectionAfterHeaderView();
+
+                // Call swipeContainer.setRefreshing(false) to signal refresh has ended
+                swipeContainer.setRefreshing(false);
             }
 
             // On FAILURE

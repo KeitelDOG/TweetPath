@@ -3,8 +3,11 @@ package com.megalobiz.tweetpath.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ public class ComposeActivity extends AppCompatActivity {
     User user;
     TwitterClient client;
     EditText etBody;
+    TextView tvRemainingChars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class ComposeActivity extends AppCompatActivity {
         TextView ivUserName = (TextView) findViewById(R.id.tvUserName);
         TextView ivScreenName = (TextView) findViewById(R.id.tvScreenName);
         etBody = (EditText) findViewById(R.id.etBody);
+        tvRemainingChars = (TextView) findViewById(R.id.tvRemainingChars);
 
         ivUserName.setText(user.getName());
         //add @ to as prefix to screen name
@@ -61,6 +66,29 @@ public class ComposeActivity extends AppCompatActivity {
             Picasso.with(this).load(profileImageUrl).into(ivProfileImage);
         }
 
+        // add text changed listener to Body text view
+        listenBodyText();
+    }
+
+    public void listenBodyText() {
+        // count remaining characters on text changed
+        etBody.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int remainCount = 140 - editable.length();
+                tvRemainingChars.setText(String.valueOf(remainCount));
+            }
+        });
     }
 
     public void onTweet(View view) {

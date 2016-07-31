@@ -126,6 +126,9 @@ public class TimelineActivity extends AppCompatActivity {
                 aTweets.notifyDataSetChanged();
                 //Log.d("DEBUG", tweets.toString());
 
+                // scroll to first element in list view
+                if (oldestId == 0)
+                    lvTweets.setSelectionAfterHeaderView();
             }
 
             // On FAILURE

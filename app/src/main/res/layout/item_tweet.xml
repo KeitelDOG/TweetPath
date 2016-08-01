@@ -83,7 +83,6 @@
             android:layout_alignParentEnd="false"
             android:scaleType="centerInside"
             android:layout_alignParentStart="false"
-            android:layout_alignParentTop="false"
             android:adjustViewBounds="true"
             android:layout_marginTop="5dp" />
 

@@ -24,7 +24,8 @@ Time spent: 12 hours
 * [x] Optional: Links in tweets are clickable and will launch the web browser
 * [x] Optional: User can refresh tweets timeline by pulling down to refresh
 * [x] Optional: Improve the user interface and theme the app to feel "twitter branded"
- 
+
+* [x] Stretch: User can see embedded image media within the tweet detail view
 
 ## Video preview of what it does
 Here's a video of the app running:

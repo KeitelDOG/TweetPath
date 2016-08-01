@@ -23,6 +23,7 @@ Time spent: 12 hours
 * [x] Optional: While composing a tweet, user can see a character counter with characters remaining for tweet out of 140
 * [x] Optional: Links in tweets are clickable and will launch the web browser
 * [x] Optional: User can refresh tweets timeline by pulling down to refresh
+* [x] Optional: Improve the user interface and theme the app to feel "twitter branded"
  
 
 ## Video preview of what it does

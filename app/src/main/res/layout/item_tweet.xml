@@ -37,7 +37,7 @@
             android:layout_marginRight="5dp"
             android:textSize="15sp" />
 
-        <TextView
+        <com.megalobiz.tweetpath.utils.LinkifiedTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/body_tweet"
@@ -46,7 +46,10 @@
             android:layout_below="@+id/tvScreenName"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:autoLink="all"
+            android:linksClickable="true"
+            android:textColorLink="#1bc9e0" />
 
         <TextView
             android:layout_width="wrap_content"

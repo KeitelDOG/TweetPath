@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class ComposeActivity extends AppCompatActivity {
 
@@ -63,7 +64,9 @@ public class ComposeActivity extends AppCompatActivity {
         String profileImageUrl = user.getProfileImageUrl();
 
         if(!TextUtils.isEmpty(profileImageUrl)) {
-            Picasso.with(this).load(profileImageUrl).into(ivProfileImage);
+            Picasso.with(this).load(profileImageUrl)
+                    .transform(new RoundedCornersTransformation(3, 3))
+                    .into(ivProfileImage);
         }
 
         // add text changed listener to Body text view

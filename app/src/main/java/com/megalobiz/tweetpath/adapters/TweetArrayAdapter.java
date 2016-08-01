@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by KeitelRobespierre on 7/27/2016.
  * taking the Tweet objects and turning them into Views displayed in the list
@@ -67,14 +69,18 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         // set profile image
         String profileImageUrl = tweet.getUser().getProfileImageUrl();
         if(!TextUtils.isEmpty(profileImageUrl)) {
-            Picasso.with(getContext()).load(profileImageUrl).into(ivProfileImage);
+            Picasso.with(getContext()).load(profileImageUrl)
+                    .transform(new RoundedCornersTransformation(3, 3))
+                    .into(ivProfileImage);
         }
 
         // set media photo. if there is photos, we take only the 1st photo
         if (tweet.getPhotoUrls().size() > 0) {
             String mediaPhoto = tweet.getPhotoUrls().get(0);
             if(!TextUtils.isEmpty(mediaPhoto)) {
-                Picasso.with(getContext()).load(mediaPhoto).into(ivMediaPhoto);
+                Picasso.with(getContext()).load(mediaPhoto)
+                        .transform(new RoundedCornersTransformation(20, 20))
+                        .into(ivMediaPhoto);
             }
         }
 

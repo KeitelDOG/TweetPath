@@ -1,6 +1,7 @@
 package com.megalobiz.tweetpath.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,10 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         TextView ivTimeAgo = (TextView) convertView.findViewById(R.id.tvTimeAgo);
         TextView ivBody = (TextView) convertView.findViewById(R.id.tvBody);
 
+        // find media view
+        ImageView ivMediaPhoto = (ImageView) convertView.findViewById(R.id.ivMediaPhoto);
+        ivMediaPhoto.setImageResource(0);
+
         ivUserName.setText(tweet.getUser().getName());
         //add @ to as prefix to screen name
         ivScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
@@ -58,10 +63,19 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
         ivBody.setText(tweet.getBody());
 
+        // set the images with Picasso
+        // set profile image
         String profileImageUrl = tweet.getUser().getProfileImageUrl();
-
         if(!TextUtils.isEmpty(profileImageUrl)) {
             Picasso.with(getContext()).load(profileImageUrl).into(ivProfileImage);
+        }
+
+        // set media photo. if there is photos, we take only the 1st photo
+        if (tweet.getPhotoUrls().size() > 0) {
+            String mediaPhoto = tweet.getPhotoUrls().get(0);
+            if(!TextUtils.isEmpty(mediaPhoto)) {
+                Picasso.with(getContext()).load(mediaPhoto).into(ivMediaPhoto);
+            }
         }
 
         return convertView;

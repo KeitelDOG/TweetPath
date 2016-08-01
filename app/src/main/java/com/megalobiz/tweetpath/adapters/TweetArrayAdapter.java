@@ -55,6 +55,10 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         ImageView ivMediaPhoto = (ImageView) convertView.findViewById(R.id.ivMediaPhoto);
         ivMediaPhoto.setImageResource(0);
 
+        // retweet and favorite counter
+        TextView tvRetweetCount = (TextView) convertView.findViewById(R.id.tvRetweetCount);
+        TextView tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
+
         ivUserName.setText(tweet.getUser().getName());
         //add @ to as prefix to screen name
         ivScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
@@ -64,6 +68,10 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         ivTimeAgo.setText(timeAgo);
 
         ivBody.setText(tweet.getBody());
+
+        // social counters
+        tvRetweetCount.setText(String.valueOf(tweet.getRetweetCount()));
+        tvFavoriteCount.setText(String.valueOf(tweet.getFavoriteCount()));
 
         // set the images with Picasso
         // set profile image

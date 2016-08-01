@@ -83,9 +83,66 @@
             android:layout_alignParentEnd="false"
             android:scaleType="centerInside"
             android:layout_alignParentStart="false"
-            android:layout_alignParentTop="false"
             android:adjustViewBounds="true"
             android:layout_marginTop="5dp" />
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivMediaPhoto"
+            android:layout_alignLeft="@+id/ivMediaPhoto">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/ivReply"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/reply_action" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/tvRetweetCount"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="3dp"
+                android:layout_alignParentTop="false"
+                android:layout_toRightOf="@+id/ivRetweet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvFavoriteCount"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="3dp"
+                android:layout_alignParentTop="false"
+                android:text="0"
+                android:layout_toRightOf="@+id/ivFavorite" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/ivRetweet"
+                android:src="@drawable/retweet_action"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivReply"
+                android:layout_toEndOf="@+id/ivReply"
+                android:layout_marginLeft="100dp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/ivFavorite"
+                android:src="@drawable/like_action"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivRetweet"
+                android:layout_toEndOf="@+id/ivRetweet"
+                android:layout_marginLeft="100dp" />
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -42,5 +42,6 @@ dependencies {
     compile 'jp.wasabeef:picasso-transformations:2.1.0'
     // Image GPU Filters
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }
 

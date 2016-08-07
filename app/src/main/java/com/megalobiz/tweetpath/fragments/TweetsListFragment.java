@@ -15,6 +15,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.megalobiz.tweetpath.R;
 import com.megalobiz.tweetpath.TwitterApplication;
 import com.megalobiz.tweetpath.TwitterClient;
+import com.megalobiz.tweetpath.activities.TimelineActivity;
 import com.megalobiz.tweetpath.adapters.TweetArrayAdapter;
 import com.megalobiz.tweetpath.models.Tweet;
 import com.megalobiz.tweetpath.models.User;
@@ -36,6 +37,7 @@ public class TweetsListFragment extends Fragment{
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
     private ListView lvTweets;
+    protected User user;
 
     // inflation logic
     @Override
@@ -80,7 +82,6 @@ public class TweetsListFragment extends Fragment{
             aTweets = new TweetArrayAdapter(getActivity(), tweets);
         }
     }
-
 
     public void addAll(ArrayList<Tweet> tweets, long oldestId) {
         // clear list if populating for the first time, or on refresh
@@ -129,6 +130,6 @@ public class TweetsListFragment extends Fragment{
     /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.activity_timeline, menu);
+        inflater.inflate(R.menu.menu_timeline, menu);
     }*/
 }

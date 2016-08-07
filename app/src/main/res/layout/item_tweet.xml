@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ivProfileImage"
         android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_marginTop="-4dp"
+        android:layout_marginTop="-2dp"
         android:layout_alignParentRight="false"
         android:layout_alignParentEnd="true"
         android:id="@+id/relativeLayout">
@@ -49,7 +49,8 @@
             android:textSize="15sp"
             android:autoLink="all"
             android:linksClickable="true"
-            android:textColorLink="#1bc9e0" />
+            android:textColorLink="#1bc9e0"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:layout_width="wrap_content"

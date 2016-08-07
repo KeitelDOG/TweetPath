@@ -24,7 +24,7 @@ import com.loopj.android.http.RequestParams;
  */
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
+	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
 	public static final String REST_CONSUMER_KEY = "0tqephMqSPgnbStIfVSOOltQv";       // Change this
 	public static final String REST_CONSUMER_SECRET = "5H99lJH07ReKhC90Eev37laJyL0EAlpWKv9gcyuPnsamaX1ZVk"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://cptweetpath"; // Change this (here and in manifest)
@@ -69,9 +69,9 @@ public class TwitterClient extends OAuthBaseClient {
 
     }
 
-    // VerifyCredentials - get information of the authenticated user
+    // UserInfo - get information of the authenticated user
     // GET account/verify_credentials.json
-    public void getVerifyCredentials(AsyncHttpResponseHandler handler) {
+    public void getUserInfo(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("account/verify_credentials.json");
 
         // Execute the request
@@ -92,6 +92,43 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().post(apiUrl, params, handler);
 	}
 
+	// MentionsTimeline - get us to the Home Timeline
+	// GET statuses/mentions_timeline.json
+	//    count = 25
+	public void getMentionsTimeline(long oldestId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		// specify the params
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		// Execute the request
+		getClient().get(apiUrl, handler);
+	}
+
+	// HomeTimeline - get us to the Home Timeline
+	// GET statuses/home_timeline.json
+	//    count = 25
+    //    screen_name = keiteldog
+	//    since_id = 1
+	public void getUserTimeline(String screenName, long oldestId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+
+		// specify the params
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+        params.put("screen_name", screenName);
+        // or
+        //params.put("user_id", userId);
+
+		if (oldestId != 0) {
+			// populate fetch tweets whose Id are lower than tweet with the oldest Id
+			// since Twitter take tweets with id lower than max_id, but including max_id
+			// max_id must be equal to oldestId -1
+			params.put("max_id", oldestId - 1);
+		}
+		// Execute the request
+		getClient().get(apiUrl, params, handler);
+
+	}
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");
 	 * 2. Define the parameters to pass to the request (query or body)

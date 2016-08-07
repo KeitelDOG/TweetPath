@@ -17,5 +17,11 @@
     <string name="compose_tweet_title">Compose Tweet</string>
     <string name="max_characters">/140 chars</string>
     <string name="remaining_chars">140</string>
+    <string name="user_profile">Profile</string>
+    <string name="user_profile_title">User Profile</string>
+    <string name="follower_count">5 Followers</string>
+    <string name="following_count">5 Following</string>
+    <string name="status_count">5 Statuses</string>
+    <string name="tag_line">TagLine</string>
 
 </resources>

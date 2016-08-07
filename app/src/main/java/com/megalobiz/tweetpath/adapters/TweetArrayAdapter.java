@@ -1,14 +1,12 @@
 package com.megalobiz.tweetpath.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.megalobiz.tweetpath.R;
@@ -46,10 +44,10 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         ivProfileImage.setImageResource(0);
 
-        TextView ivUserName = (TextView) convertView.findViewById(R.id.tvUserName);
-        TextView ivScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
-        TextView ivTimeAgo = (TextView) convertView.findViewById(R.id.tvTimeAgo);
-        TextView ivBody = (TextView) convertView.findViewById(R.id.tvBody);
+        TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
+        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
+        TextView tvTimeAgo = (TextView) convertView.findViewById(R.id.tvTimeAgo);
+        TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
 
         // find media view
         ImageView ivMediaPhoto = (ImageView) convertView.findViewById(R.id.ivMediaPhoto);
@@ -59,15 +57,15 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         TextView tvRetweetCount = (TextView) convertView.findViewById(R.id.tvRetweetCount);
         TextView tvFavoriteCount = (TextView) convertView.findViewById(R.id.tvFavoriteCount);
 
-        ivUserName.setText(tweet.getUser().getName());
+        tvUserName.setText(tweet.getUser().getName());
         //add @ to as prefix to screen name
-        ivScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
+        tvScreenName.setText(String.format("@%s", tweet.getUser().getScreenName()));
 
         // set abbreviated time ago, ex: 6s, 3m, 8h
         String timeAgo = ParseRelativeDate.getAbbreviatedTimeAgo(tweet.getCreatedAt());
-        ivTimeAgo.setText(timeAgo);
+        tvTimeAgo.setText(timeAgo);
 
-        ivBody.setText(tweet.getBody());
+        tvBody.setText(tweet.getBody());
 
         // social counters
         tvRetweetCount.setText(String.valueOf(tweet.getRetweetCount()));

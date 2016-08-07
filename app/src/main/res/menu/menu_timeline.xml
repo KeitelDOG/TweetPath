@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.TimelineActivity">
 
+    <item android:id="@+id/action_profile"
+        android:orderInCategory="5"
+        android:title="@string/user_profile"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="ifRoom" />
+
     <item android:id="@+id/action_compose"
         android:orderInCategory="10"
         android:title="@string/compose_tweet"
         android:icon="@drawable/ic_compose_tweet"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionLayout="@layout/activity_timeline" />
+        app:showAsAction="ifRoom" />
 
 </menu>

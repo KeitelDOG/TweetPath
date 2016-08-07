@@ -2,52 +2,35 @@ package com.megalobiz.tweetpath.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListViewCompat;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.megalobiz.tweetpath.R;
 import com.megalobiz.tweetpath.TwitterApplication;
 import com.megalobiz.tweetpath.TwitterClient;
-import com.megalobiz.tweetpath.adapters.TweetArrayAdapter;
 import com.megalobiz.tweetpath.fragments.HomeTimelineFragment;
 import com.megalobiz.tweetpath.fragments.MentionsTimelineFragment;
-import com.megalobiz.tweetpath.fragments.TweetsListFragment;
 import com.megalobiz.tweetpath.models.Tweet;
 import com.megalobiz.tweetpath.models.User;
-import com.megalobiz.tweetpath.utils.EndlessScrollListener;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.scribe.builder.api.TwitterApi;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
     //auth user
-    protected User user;
+    public static User user;
+
     protected TwitterClient client;
 
     @Override
@@ -78,10 +61,10 @@ public class TimelineActivity extends AppCompatActivity {
 
     // fetch information of the authenticated user
     public void fetchUserCredentials() {
-        client.getVerifyCredentials(new JsonHttpResponseHandler() {
+        client.getUserInfo(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                user = User.fromJSON(response);
+                TimelineActivity.user = User.fromJSON(response);
             }
 
             @Override
@@ -94,7 +77,7 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_timeline, menu);
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
         return true;
     }
 
@@ -111,6 +94,11 @@ public class TimelineActivity extends AppCompatActivity {
             return true;
         }
 
+        //action go to user profile
+        if (id == R.id.action_profile) {
+            viewUserProfile();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -121,6 +109,11 @@ public class TimelineActivity extends AppCompatActivity {
         startActivityForResult(i, 10);
     }
 
+    public void viewUserProfile() {
+        Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("user", user);
+        startActivity(i);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

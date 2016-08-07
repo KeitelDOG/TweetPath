@@ -46,6 +46,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.ComposeActivity"
             android:label="@string/compose_tweet_title" />
+        <activity android:name=".activities.ProfileActivity"
+            android:label="@string/user_profile_title" />
     </application>
 
 </manifest>

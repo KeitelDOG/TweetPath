@@ -51,7 +51,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 //Log.d("DEBUG", errorResponse.toString());
-                if (throwable.getMessage().contains("resolve host")) {
+                if (throwable.getMessage().contains("resolve host") || throwable.getMessage().contains("failed to connect")) {
                     Toast.makeText(getActivity(),
                             "Could not connect to internet, please verify your connection", Toast.LENGTH_LONG).show();
                 }

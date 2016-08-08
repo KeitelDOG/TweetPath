@@ -129,6 +129,19 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 
 	}
+
+	// UserInfo - get information of the authenticated user
+	// GET users/profile_banner.json
+	public void getProfileBanner(String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/profile_banner.json");
+
+		// specify the params
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenName);
+		// Execute the request
+		getClient().get(apiUrl, params, handler);
+	}
+
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");
 	 * 2. Define the parameters to pass to the request (query or body)

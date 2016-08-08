@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.megalobiz.tweetpath.R;
@@ -39,6 +40,8 @@ public class TweetsListFragment extends Fragment{
     private ListView lvTweets;
     protected User user;
 
+    protected SwipeRefreshLayout swipeContainer;
+
     // inflation logic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,13 +58,46 @@ public class TweetsListFragment extends Fragment{
             public boolean onLoadMore(int page, int totalItemsCount) {
                 // find the oldest tweet id
                 long oldestId = getOldestTweetId();
-                //Toast.makeText(TimelineActivity.this,
-                //        "Load More -> Page: " + page + " - Oldest Id: " + oldestId,
-                //        Toast.LENGTH_LONG).show();
 
                 // pocpulate timeline with tweets before the tweet with the oldest Id
-                //populateTimeline(oldestId);
+                if(TweetsListFragment.this instanceof HomeTimelineFragment) {
+                    ((HomeTimelineFragment) TweetsListFragment.this).populateTimeline(oldestId);
+
+                } else if(TweetsListFragment.this instanceof MentionsTimelineFragment) {
+                    ((MentionsTimelineFragment) TweetsListFragment.this).populateTimeline(oldestId);
+
+                } else if(TweetsListFragment.this instanceof UserTimelineFragment) {
+                    ((UserTimelineFragment) TweetsListFragment.this).populateTimeline(user.getScreenName(), oldestId);
+                }
+
                 return true;
+            }
+        });
+
+
+        // Lookup the Swipe Container view//
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+
+        //Listen for Swipe Refresh to fetch Moives again
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Make sure to call swipeContainer.setRefreshing(fasle) once the
+                // network has completed successfully
+                //clear list before refreshing
+
+                if(TweetsListFragment.this instanceof HomeTimelineFragment) {
+                    ((HomeTimelineFragment) TweetsListFragment.this).clear();
+                    ((HomeTimelineFragment) TweetsListFragment.this).populateTimeline(Long.parseLong("0"));
+
+                } else if(TweetsListFragment.this instanceof MentionsTimelineFragment) {
+                    ((MentionsTimelineFragment) TweetsListFragment.this).clear();
+                    ((MentionsTimelineFragment) TweetsListFragment.this).populateTimeline(Long.parseLong("0"));
+
+                } else if(TweetsListFragment.this instanceof UserTimelineFragment) {
+                    ((UserTimelineFragment) TweetsListFragment.this).clear();
+                    ((UserTimelineFragment) TweetsListFragment.this).populateTimeline(user.getScreenName(), Long.parseLong("0"));
+                }
             }
         });
 

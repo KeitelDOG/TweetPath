@@ -100,6 +100,14 @@ public class TwitterClient extends OAuthBaseClient {
 		// specify the params
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
+
+		if (oldestId != 0) {
+			// populate fetch tweets whose Id are lower than tweet with the oldest Id
+			// since Twitter take tweets with id lower than max_id, but including max_id
+			// max_id must be equal to oldestId -1
+			params.put("max_id", oldestId - 1);
+		}
+
 		// Execute the request
 		getClient().get(apiUrl, handler);
 	}

@@ -20,7 +20,6 @@ import cz.msebera.android.httpclient.Header;
  */
 public class UserTimelineFragment extends TweetsListFragment {
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,22 +33,6 @@ public class UserTimelineFragment extends TweetsListFragment {
             populateTimeline(screenName, Long.parseLong("0"));
         }
 
-        /*
-        // Lookup the Swipe Container view//
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-
-        //Listen for Swipe Refresh to fetch Moives again
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Make sure to call swipeContainer.setRefreshing(fasle) once the
-                // network has completed successfully
-                //clear list before refreshing
-                fragmentTweetsList.clear();
-                populateTimeline(Long.parseLong("0"));
-            }
-        });
-        */
     }
 
     public static UserTimelineFragment newInstance(User user) {
@@ -81,7 +64,7 @@ public class UserTimelineFragment extends TweetsListFragment {
                 addAll(Tweet.fromJSONArray(response), oldestId);
 
                 // Call swipeContainer.setRefreshing(false) to signal refresh has ended
-                //swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
             }
 
             // On FAILURE

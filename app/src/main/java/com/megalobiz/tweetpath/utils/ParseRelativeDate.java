@@ -43,6 +43,9 @@ public class ParseRelativeDate {
             long diffMinutes = diff / (60 * 1000);
             long diffHours = diff / (60 * 60 * 1000);
             long diffDays = diff / (24 * 60 * 60 * 1000);
+            long diffWeeks = diff / (7 * 24 * 60 * 60 * 1000);
+            Long diffMonths = (long) (diff / (30.5 * 24 * 60 * 60 * 1000));
+            long diffYears = (long) (diff / (365.25 * 24 * 60 * 60 * 1000));
 
             if (diffSeconds < 60) {
                 return diffSeconds + "s";
@@ -55,6 +58,15 @@ public class ParseRelativeDate {
 
             } else if (diffDays < 7) {
                 return diffDays + "d";
+
+            } else if (diffWeeks < 5) {
+                return diffWeeks + "w";
+
+            } else if (diffMonths < 12) {
+                return diffMonths + "m";
+
+            } else if (diffYears > 0) {
+                return diffYears + "y";
             }
 
         } catch (ParseException e) {

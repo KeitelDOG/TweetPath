@@ -74,13 +74,11 @@ public class TweetsListFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState == null) {
-            client = TwitterApplication.getRestClient();
-            // create the array list (data source)
-            tweets = new ArrayList<>();
-            // construct the adapter from data source
-            aTweets = new TweetArrayAdapter(getActivity(), tweets);
-        }
+        client = TwitterApplication.getRestClient();
+        // create the array list (data source)
+        tweets = new ArrayList<>();
+        // construct the adapter from data source
+        aTweets = new TweetArrayAdapter(getActivity(), tweets);
     }
 
     public void addAll(ArrayList<Tweet> tweets, long oldestId) {

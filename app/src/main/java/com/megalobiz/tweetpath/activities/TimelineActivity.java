@@ -1,8 +1,10 @@
 package com.megalobiz.tweetpath.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -55,6 +57,7 @@ public class TimelineActivity extends AppCompatActivity {
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         //attach the tabstrip to the viewpager
         tabStrip.setViewPager(vpPager);
+        tabStrip.setTextColor(Color.parseColor("#1b95e0"));
 
         fetchUserCredentials();
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.megalobiz.tweetpath.R;
 import com.megalobiz.tweetpath.fragments.UserTimelineFragment;
 import com.megalobiz.tweetpath.models.User;
+import com.megalobiz.tweetpath.utils.CountFormatter;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -73,9 +74,9 @@ public class ProfileActivity extends AppCompatActivity {
         ivTagLine.setText(user.getTagLine());
 
         // social counters
-        tvFollowerCount.setText(String.format("%d Followers", user.getFollowerCount()));
-        tvFollowingCount.setText(String.format("%d Following", user.getFriendCount()));
-        tvStatusCount.setText(String.format("%d Statuses", user.getStatusCount()));
+        tvFollowerCount.setText(String.format("%s FOLLOWERS", CountFormatter.format(user.getFollowerCount())));
+        tvFollowingCount.setText(String.format("%s FOLLOWING", CountFormatter.format(user.getFriendCount())));
+        tvStatusCount.setText(String.format("%s TWEETS", CountFormatter.format(user.getStatusCount())));
 
         // set the images with Picasso
         // set profile image

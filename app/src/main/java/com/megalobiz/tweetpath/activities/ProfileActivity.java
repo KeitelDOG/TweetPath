@@ -2,6 +2,7 @@ package com.megalobiz.tweetpath.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -101,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         // action compose new tweet
-        if (id == R.id.home) {
+        if (id == android.R.id.home) {
             finish();
             return true;
         }

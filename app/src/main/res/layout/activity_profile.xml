@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfileActivity">
+    tools:context=".activities.ProfileActivity"
+    android:background="#DDD">
 
 
     <RelativeLayout
@@ -32,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/ivProfileImage"
             android:layout_toRightOf="@+id/ivProfileImage"
-            android:layout_marginTop="-2dp"
             android:layout_alignParentRight="false"
             android:layout_alignParentEnd="true"
             android:id="@+id/relativeLayout">
@@ -76,7 +76,7 @@
                 android:text="@string/follower_count"
                 android:id="@+id/tvFollowerCount"
                 android:layout_marginRight="20dp"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -85,7 +85,7 @@
                 android:text="@string/following_count"
                 android:id="@+id/tvFollowingCount"
                 android:layout_marginRight="20dp"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/status_count"
                 android:id="@+id/tvStatusCount"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -107,5 +107,5 @@
         android:layout_alignParentStart="true"
         android:id="@+id/flContainer"
         android:background="#FFF"
-        android:layout_marginTop="1dp" />
+        android:layout_marginTop="3dp" />
 </RelativeLayout>

@@ -23,5 +23,6 @@
     <string name="following_count">5 FOLLOWING</string>
     <string name="status_count">5 TWEETS</string>
     <string name="tag_line">TagLine</string>
+    <string name="logout">Logout</string>
 
 </resources>

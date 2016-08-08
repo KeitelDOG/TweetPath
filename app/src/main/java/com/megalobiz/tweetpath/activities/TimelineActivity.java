@@ -102,6 +102,12 @@ public class TimelineActivity extends AppCompatActivity {
             viewUserProfile();
         }
 
+        // logout Twitter
+        if (id == R.id.action_logout) {
+            client.clearAccessToken();
+            finish();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

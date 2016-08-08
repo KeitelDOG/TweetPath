@@ -55,12 +55,18 @@ public class TweetsListFragment extends Fragment{
             public boolean onLoadMore(int page, int totalItemsCount) {
                 // find the oldest tweet id
                 long oldestId = getOldestTweetId();
-                //Toast.makeText(TimelineActivity.this,
-                //        "Load More -> Page: " + page + " - Oldest Id: " + oldestId,
-                //        Toast.LENGTH_LONG).show();
 
                 // pocpulate timeline with tweets before the tweet with the oldest Id
-                //populateTimeline(oldestId);
+                if(TweetsListFragment.this instanceof HomeTimelineFragment) {
+                    ((HomeTimelineFragment) TweetsListFragment.this).populateTimeline(oldestId);
+
+                } else if(TweetsListFragment.this instanceof MentionsTimelineFragment) {
+                    ((MentionsTimelineFragment) TweetsListFragment.this).populateTimeline(oldestId);
+
+                } else if(TweetsListFragment.this instanceof UserTimelineFragment) {
+                    ((UserTimelineFragment) TweetsListFragment.this).populateTimeline(user.getScreenName(), oldestId);
+                }
+
                 return true;
             }
         });

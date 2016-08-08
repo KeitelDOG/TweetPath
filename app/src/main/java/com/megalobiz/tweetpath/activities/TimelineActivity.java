@@ -31,7 +31,7 @@ import cz.msebera.android.httpclient.Header;
 public class TimelineActivity extends AppCompatActivity {
 
     //auth user
-    public static User user;
+    private User user;
 
     protected TwitterClient client;
 
@@ -67,7 +67,7 @@ public class TimelineActivity extends AppCompatActivity {
         client.getUserInfo(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                TimelineActivity.user = User.fromJSON(response);
+                user = User.fromJSON(response);
             }
 
             @Override

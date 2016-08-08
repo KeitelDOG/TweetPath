@@ -21,8 +21,6 @@ import cz.msebera.android.httpclient.Header;
  */
 public class MentionsTimelineFragment extends TweetsListFragment {
 
-    private SwipeRefreshLayout swipeContainer;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +42,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 addAll(Tweet.fromJSONArray(response), oldestId);
 
                 // Call swipeContainer.setRefreshing(false) to signal refresh has ended
-                //swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
             }
 
             // On FAILURE

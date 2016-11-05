@@ -18,6 +18,9 @@ public class Tweet implements Serializable {
     private long uid;
     private User user;
     private String createdAt;
+    private ArrayList<String> photoUrls;
+    private Integer retweetCount;
+    private Integer favoriteCount;
 
     public String getBody() {
         return body;
@@ -35,6 +38,18 @@ public class Tweet implements Serializable {
         return user;
     }
 
+    public ArrayList<String> getPhotoUrls() {
+        return photoUrls;
+    }
+
+    public Integer getRetweetCount() {
+        return retweetCount;
+    }
+
+    public Integer getFavoriteCount() {
+        return favoriteCount;
+    }
+
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
 
@@ -44,6 +59,24 @@ public class Tweet implements Serializable {
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+
+            // retweet and favorite count
+            tweet.retweetCount = jsonObject.getInt("retweet_count");
+            tweet.favoriteCount = jsonObject.getInt("favorite_count");
+
+            // take tweet media if Json has entities and media
+            tweet.photoUrls = new ArrayList<>();
+            if (jsonObject.has("entities") && jsonObject.getJSONObject("entities").has("media")) {
+                JSONArray medias = jsonObject.getJSONObject("entities").getJSONArray("media");
+                for (int i = 0; i < medias.length(); i++) {
+                    JSONObject media = medias.getJSONObject(i);
+
+                    if (media.getString("type").equals("photo")) {
+                        tweet.photoUrls.add(media.getString("media_url"));
+                    }
+                }
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

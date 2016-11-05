@@ -7,7 +7,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,10 +21,10 @@ import com.megalobiz.tweetpath.models.Tweet;
 import com.megalobiz.tweetpath.models.User;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class ComposeActivity extends AppCompatActivity {
 
@@ -51,19 +50,21 @@ public class ComposeActivity extends AppCompatActivity {
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         ivProfileImage.setImageResource(0);
 
-        TextView ivUserName = (TextView) findViewById(R.id.tvUserName);
-        TextView ivScreenName = (TextView) findViewById(R.id.tvScreenName);
+        TextView tvUserName = (TextView) findViewById(R.id.tvUserName);
+        TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName);
         etBody = (EditText) findViewById(R.id.etBody);
         tvRemainingChars = (TextView) findViewById(R.id.tvRemainingChars);
 
-        ivUserName.setText(user.getName());
+        tvUserName.setText(user.getName());
         //add @ to as prefix to screen name
-        ivScreenName.setText(String.format("@%s", user.getScreenName()));
+        tvScreenName.setText(String.format("@%s", user.getScreenName()));
 
         String profileImageUrl = user.getProfileImageUrl();
 
         if(!TextUtils.isEmpty(profileImageUrl)) {
-            Picasso.with(this).load(profileImageUrl).into(ivProfileImage);
+            Picasso.with(this).load(profileImageUrl)
+                    .transform(new RoundedCornersTransformation(3, 3))
+                    .into(ivProfileImage);
         }
 
         // add text changed listener to Body text view
